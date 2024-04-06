@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    .container {
+      width: 80%;
+      margin: auto;
+      margin-top: 50px;
+    }
+
+    form {
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='phone'],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    input[type='submit'] {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type='submit']:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Contact Us!</h1>
+    <form id="contactForm">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" /><br />
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" /><br />
+      <label for="phone">Phone:</label><br />
+      <input type="phone" id="phone" /><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message"></textarea><br />
+      <input type="submit" value="Send" />
+    </form>
+  </div>
+
+  <script>
+
+    const contactForm = document.getElementById('contactForm')
+    const nameInput = document.getElementById('name')
+    const emailInput = document.getElementById('email')
+    const phoneInput = document.getElementById('phone')
+    const messageInput = document.getElementById('message')
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      await fetch('/send-message', {
+        method: 'POST',
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+          name: nameInput.value,
+          email: emailInput.value,
+          phone: phoneInput.value,
+          message: messageInput.value
+        })
+      })
+      nameInput.value = "";
+      emailInput.value = "";
+      phoneInput.value = "";
+      messageInput.value = "";
+    })
+  </script>
+
+
+</body>
+
+</html>
