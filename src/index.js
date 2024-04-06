@@ -13,8 +13,10 @@ const contactFormSchema = z.object({
   message: z.string().min(1, { message: "Message is required" }),
 });
 
+//this is a middleware to work with json
 app.use(express.json());
 
+//this is a middleware to use the public files
 app.use(express.static("public"));
 
 app.post("/send-message", async (req, res) => {
